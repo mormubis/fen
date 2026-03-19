@@ -1,0 +1,149 @@
+# @echecs/fen
+
+Parse and stringify
+[FEN](https://www.chessprogramming.org/Forsyth-Edwards_Notation)
+(Forsyth-Edwards Notation) chess positions. Strict TypeScript, no-throw API.
+
+## Install
+
+```bash
+npm install @echecs/fen
+```
+
+## Usage
+
+### Parsing
+
+```typescript
+import parse from '@echecs/fen';
+
+const position = parse(
+  'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+);
+// => { board, turn, castlingRights, enPassantSquare, halfmoveClock, fullmoveNumber }
+
+parse('invalid');
+// => null
+```
+
+`parse` never throws. It returns `null` when the input is not a valid FEN
+string.
+
+#### Error and warning callbacks
+
+Errors indicate invalid FEN syntax — the string cannot be parsed. Warnings
+indicate a successfully parsed position that is suspicious (e.g. missing king).
+
+```typescript
+const position = parse(fen, {
+  onError(error) {
+    // FEN is malformed — parse returns null.
+    console.error(`[${error.offset}] ${error.message}`);
+  },
+  onWarning(warning) {
+    // FEN is valid but the position is suspicious.
+    console.warn(warning.message);
+  },
+});
+```
+
+Errors are reported for:
+
+- Wrong number of fields
+- Invalid piece placement (bad piece type, wrong rank length)
+- Invalid active color
+- Invalid castling availability
+- Invalid en passant target square
+- Invalid halfmove clock (non-numeric or negative)
+- Invalid fullmove number (non-numeric or less than 1)
+
+Warnings are reported for:
+
+- Missing king for either side
+- Pawn on rank 1 or 8
+- More than 8 pawns per side
+- More than 16 pieces per side
+
+### Stringifying
+
+```typescript
+import { stringify } from '@echecs/fen';
+
+stringify(position);
+// => 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+```
+
+`stringify` always succeeds.
+
+### Constants
+
+```typescript
+import { STARTING_FEN } from '@echecs/fen';
+
+STARTING_FEN;
+// => 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+```
+
+## API
+
+### `parse(input: string, options?: ParseOptions): Position | null`
+
+Parses a FEN string into a `Position` object. Returns `null` if the input is not
+a valid FEN string.
+
+### `stringify(position: Position): string`
+
+Serializes a `Position` object into a FEN string.
+
+### `STARTING_FEN`
+
+The FEN string for the standard starting position.
+
+### Types
+
+```typescript
+interface Position {
+  board: Map<Square, Piece>;
+  castlingRights: CastlingRights;
+  enPassantSquare: Square | undefined;
+  fullmoveNumber: number;
+  halfmoveClock: number;
+  turn: Color;
+}
+
+interface ParseError {
+  column: number; // 1-indexed column in the FEN string
+  line: number; // Always 1 (FEN is single-line)
+  message: string;
+  offset: number; // 0-indexed offset into the FEN string
+}
+
+interface ParseWarning {
+  column: number;
+  line: number;
+  message: string;
+  offset: number;
+}
+
+type Color = 'w' | 'b';
+type Square = `${File}${Rank}`;
+type File = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h';
+type Rank = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8';
+type PieceType = 'p' | 'n' | 'b' | 'r' | 'q' | 'k';
+
+interface Piece {
+  color: Color;
+  type: PieceType;
+}
+
+interface CastlingRights {
+  wK: boolean;
+  wQ: boolean;
+  bK: boolean;
+  bQ: boolean;
+}
+```
+
+## License
+
+MIT
