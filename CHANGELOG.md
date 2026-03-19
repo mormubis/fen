@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - 2026-03-19
+
+### Fixed
+
+- Updated lockfile after removing `@echecs/position` dependency.
+
 ## [1.0.0] - 2026-03-19
 
 ### Added
