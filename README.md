@@ -101,6 +101,26 @@ The FEN string for the standard starting position.
 
 ### Types
 
+All types are named exports and can be imported directly:
+
+```typescript
+import type {
+  CastlingRights,
+  Color,
+  EnPassantSquare,
+  File,
+  ParseError,
+  ParseOptions,
+  ParseWarning,
+  Piece,
+  PieceType,
+  Position,
+  Rank,
+  SideCastlingRights,
+  Square,
+} from '@echecs/fen';
+```
+
 ```typescript
 interface Position {
   board: ReadonlyMap<Square, Piece>;
@@ -109,6 +129,11 @@ interface Position {
   fullmoveNumber: number;
   halfmoveClock: number;
   turn: Color;
+}
+
+interface ParseOptions {
+  onError?: (error: ParseError) => void;
+  onWarning?: (warning: ParseWarning) => void;
 }
 
 interface ParseError {

@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1] - 2026-04-09
+
+### Fixed
+
+- documented `ParseOptions` type export
+- documented `SideCastlingRights` type export
+- clarified named type exports
+
 ## [2.0.0] - 2026-04-09
 
 ### Changed
