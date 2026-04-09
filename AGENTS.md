@@ -2,6 +2,9 @@
 
 Agent guidance for the `@echecs/fen` package — FEN parser/serialiser.
 
+**See also:** [`REFERENCES.md`](REFERENCES.md) |
+[`COMPARISON.md`](COMPARISON.md)
+
 See the root `AGENTS.md` for workspace-wide conventions.
 
 **Backlog:** tracked in [GitHub Issues](https://github.com/mormubis/fen/issues).
@@ -15,44 +18,6 @@ serialises them back. Default export `parse()` never throws — returns `null` o
 failure. Named export `stringify()` always succeeds.
 
 API mirrors `@echecs/trf`.
-
----
-
-## Similar Libraries
-
-Use these to cross-check output when testing:
-
-- [`chess.js`](https://www.npmjs.com/package/chess.js) — includes FEN
-  parsing/serialisation as part of its full chess engine.
-- [`chessops`](https://www.npmjs.com/package/chessops) — TypeScript chess
-  library with FEN read/write support.
-- [`chess-fen`](https://www.npmjs.com/package/chess-fen) — standalone immutable
-  FEN manipulation library.
-- [`@chess-fu/fen-parser`](https://www.npmjs.com/package/@chess-fu/fen-parser) —
-  lightweight regex-based FEN parser.
-
----
-
-## Dependency Graph
-
-```
-@echecs/position
-     ↑
-@echecs/fen
-```
-
----
-
-## FEN Format
-
-Six space-separated fields:
-
-1. Piece placement (rank 8 → rank 1, `/` separated)
-2. Active color (`w`/`b`)
-3. Castling rights (`KQkq` or `-`)
-4. En passant square (`e3` or `-`)
-5. Halfmove clock (integer)
-6. Fullmove number (integer)
 
 ---
 
