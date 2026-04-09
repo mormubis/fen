@@ -4,6 +4,8 @@ Agent guidance for the `@echecs/fen` package — FEN parser/serialiser.
 
 See the root `AGENTS.md` for workspace-wide conventions.
 
+**Backlog:** tracked in [GitHub Issues](https://github.com/mormubis/fen/issues).
+
 ---
 
 ## Project Overview
