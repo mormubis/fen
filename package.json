@@ -26,6 +26,7 @@
   "engines": {
     "node": ">=20"
   },
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
